@@ -61,3 +61,13 @@ p {
   color: #7e7e7e;
   font-size: 90%;
 }
+
+h1 {
+  display: inline-block;
+}
+
+header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}

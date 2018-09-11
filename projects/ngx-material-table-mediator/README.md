@@ -51,7 +51,7 @@ constructor(
 
 The mediator will take care of feeding the objects the correct data.
 
-You can find an example [here](https://github.com/JanMalch/ngx-material-table-mediator/tree/master/src/app).
+You can find an example [here](https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/app.component.ts).
 
 ## Hooks
 
