@@ -4,3 +4,5 @@
 
 export * from './lib/mat-table.mediator';
 export * from './lib/models';
+export * from './lib/basic.mediator';
+

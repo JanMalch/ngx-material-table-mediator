@@ -53,6 +53,32 @@ The mediator will take care of feeding the objects the correct data.
 
 You can find an example [here](https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/app.component.ts).
 
+## `BasicTableMediator`
+
+You can also use the `BasicTableMediator`, which takes the fetch function and and fetchPayload as constructor parameters.
+This is useful for simple mediators and makes creating subclasses unnecessary.
+
+```typescript
+ngAfterViewInit() {
+  this.mediator = new BasicTableMediator<any, GithubIssue>(
+    (payload, sortBy, sortDirection, pageIndex, pageSize) =>
+      this.fetch(payload, sortBy, sortDirection, pageIndex, pageSize),
+    this.trigger$, this.table,
+    this.paginator, this.sort
+  );
+
+  this.isLoading$ = this.mediator.isLoading$;
+  this.mediator.error$.subscribe(() => this.isRateLimitReached$.next(true));
+  this.mediator.onFetchBegin$.subscribe(() => this.isRateLimitReached$.next(false));
+}
+
+private fetch(payload: undefined,
+              sortBy: string, sortDirection: SortDirection,
+              pageIndex: number, pageSize: number): Observable<MediatorData<GithubIssue>> {
+  // your API call
+}
+```
+
 ## Hooks
 
 The class provides the following hooks as observables, to react to certain events.
