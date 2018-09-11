@@ -46,7 +46,7 @@ constructor(
   super(table, paginator, sort);
   // ...
   // due to inheritance this cannot be called by the super class every time
-  this.ngOnInit(); // you don't have to call this in the constructor. It depends on your use case.
+  super.ngOnInit(); // you don't have to call this in the constructor. It depends on your use case.
 }
 ```
 
@@ -98,12 +98,12 @@ Besides the necessary implementations you can override the following methods, to
 
 - `handleResult(result: MediatorData<O>): void` → This function gets called every time new data was fetched.
                                                    It's responsible for feeding the data into the right places.
-- `handleError` → This function handles any errors that occur while fetching the data.
+- `handleError(error: Error): Observable<MediatorData<O>>` → This function handles any errors that occur while fetching the data.
                    You can either safely handle the error and return replacement data or rethrow the error.
-- `initDataFetch` → This is the mediator's core function and setups the logic.
-- `initPageReset` → This function creates an internal observable to reset the paginator, if sorting or fetch payload changes.
-- `ngOnInit` → This function initialises the page reset and the fetch function.
-- `trackByFn` → An optional function passed into the MatTable that defines how to track the items.
+- `initDataFetch(): void` → This is the mediator's core function and setups the logic.
+- `initPageReset(): void` → This function creates an internal observable to reset the paginator, if sorting or fetch payload changes.
+- `ngOnInit(): void` → This function initialises the page reset and the fetch function.
+- `trackByFn(index: number, item: O): any` → An optional function passed into the MatTable that defines how to track the items.
 
 Since `MatPaginator` and `MatSort` are optional the mediator has a few getter properties, that ensure safe access:
 
