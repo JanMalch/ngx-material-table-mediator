@@ -9,8 +9,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "lib": "ng build ngx-material-table-mediator",
-    "lib-s": "npm run lib && ng serve",
-    "lib-sa": "npm run lib && ng serve --prod"
+    "lib-s": "npm run lib && ng serve --base-href /",
+    "lib-sa": "npm run lib && ng serve --prod --base-href /"
   },
   "private": true,
   "dependencies": {

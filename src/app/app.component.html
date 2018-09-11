@@ -18,6 +18,7 @@
 
   <div class="example-table-container">
 
+    <!-- notice you dont have to add the dataSource -->
     <table mat-table class="example-table"
            matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
       <!-- Number Column -->
@@ -51,15 +52,13 @@
     </table>
   </div>
 
-  <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" [pageSize]="30" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[10, 25, 30, 50, 100]" [pageSize]="30" showFirstLastButtons></mat-paginator>
 </div>
 
 <button mat-raised-button color="primary" (click)="trigger$.next(undefined)">SEARCH NOW</button>
 <blockquote>Due to the GitHub API you can only sort by <i>Created</i>.<br/>
   But you can also click other columns, and you will see it will fetch the data again.<br/><br/>
-  Same goes for selecting the page size. To prove it's working <b>I slice the array on client side.</b><br/>
-  Since the API always return 30 items, <b>the entries on the different pages won't be continuous,</b>
-  if you select <b>anything other than 30 items</b> per page. It's just for proof of concept.
+  Same goes for selecting the page size.
 </blockquote>
 
 <div>
