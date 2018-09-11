@@ -1,0 +1,25 @@
+{
+  "name": "ngx-material-table-mediator",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "rxjs": "^6.0.0",
+    "@angular/material": "^6.0.0-rc.0 || ^6.0.0"
+  },
+  "description": "A simple class that helps you manage a MatTable, MatSort and MatPaginator in your Angular component.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JanMalch/ngx-material-table-mediator.git"
+  },
+  "keywords": [
+    "Angular",
+    "TypeScript",
+    "Electron"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JanMalch/ngx-material-table-mediator/issues"
+  },
+  "homepage": "https://janmalch.github.io/ngx-material-table-mediator"
+}

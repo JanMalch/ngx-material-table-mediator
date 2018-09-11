@@ -9,11 +9,11 @@
       "projectType": "application",
       "prefix": "app",
       "schematics": {},
-      "targets": {
+      "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-material-table-mediator-app",
+            "outputPath": "docs",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -98,7 +98,7 @@
     "ngx-material-table-mediator-app-e2e": {
       "root": "e2e/",
       "projectType": "application",
-      "targets": {
+      "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -115,6 +115,41 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ngx-material-table-mediator": {
+      "root": "projects/ngx-material-table-mediator",
+      "sourceRoot": "projects/ngx-material-table-mediator/src",
+      "projectType": "library",
+      "prefix": "mtm",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-material-table-mediator/tsconfig.lib.json",
+            "project": "projects/ngx-material-table-mediator/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-material-table-mediator/src/test.ts",
+            "tsConfig": "projects/ngx-material-table-mediator/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-material-table-mediator/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-material-table-mediator/tsconfig.lib.json",
+              "projects/ngx-material-table-mediator/tsconfig.spec.json"
+            ],
             "exclude": [
               "**/node_modules/**"
             ]
