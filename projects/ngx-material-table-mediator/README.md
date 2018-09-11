@@ -2,8 +2,9 @@
 
 # ngx-material-table-mediator
 
-This library provides a single abstract class `MatTableMediator`,
+This library provides an abstract class `MatTableMediator`,
 which helps you manage a MatTable, MatSort and MatPaginator in your component.
+It also contains the `BasicTableMediator`, a simple implementation of `MatTableMediator`.
 
 ## Installation
 
