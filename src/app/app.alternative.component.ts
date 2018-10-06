@@ -29,34 +29,21 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // see app.alternative.component.ts on how to do this without a custom class
-    this.mediator = new GithubIssueTableMediator(
-      this.http, this.trigger$,
-      this.table, this.paginator, this.sort
+    this.mediator = new BasicTableMediator<any, GithubIssue>(
+      (payload, sortBy, sortDirection, pageIndex, pageSize) =>
+        this.fetch(payload, sortBy, sortDirection, pageIndex, pageSize),
+      this.trigger$, this.table,
+      this.paginator, this.sort
     );
 
     this.isLoading$ = this.mediator.isLoading$;
     this.mediator.error$.subscribe(() => this.isRateLimitReached$.next(true));
     this.mediator.onFetchBegin$.subscribe(() => this.isRateLimitReached$.next(false));
   }
-}
 
-export class GithubIssueTableMediator extends MatTableMediator<void, GithubIssue> {
-  // protected fetchPayload$ = of(undefined); // use this if you don't want to toggle by button
-
-  constructor(private http: HttpClient,
-              protected fetchPayload$: FetchPayload<void>,
-              table: MatTable<GithubIssue>,
-              paginator: MatPaginator,
-              sort: MatSort) {
-
-    super(table, paginator, sort);
-    super.ngOnInit();
-  }
-
-  fetch(payload: undefined,
-        sortBy: string, sortDirection: SortDirection,
-        pageIndex: number, pageSize: number): Observable<MediatorData<GithubIssue>> {
+  private fetch(payload: undefined,
+                sortBy: string, sortDirection: SortDirection,
+                pageIndex: number, pageSize: number): Observable<MediatorData<GithubIssue>> {
     const href = 'https://api.github.com/search/issues';
     const requestUrl =
       `${href}?q=repo:angular/material2&sort=${sortBy}&order=${sortDirection}&page=${pageIndex + 1}`;
