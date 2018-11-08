@@ -1,31 +1,31 @@
-import {AfterViewInit, OnDestroy, ViewChild} from '@angular/core';
-import {MatPaginator, MatSort, MatTable, SortDirection} from '@angular/material';
-import {Observable, of, Subject} from 'rxjs';
-import {MatTableMediator} from './mat-table.mediator';
-import {MediatorData, TriggerPayload} from './models';
-import {BasicTableMediator} from './basic.mediator';
+import {AfterViewInit, OnDestroy, ViewChild} from "@angular/core";
+import {MatPaginator, MatSort, MatTable, SortDirection} from "@angular/material";
+import {Observable, of} from "rxjs";
+import {MatTableMediator} from "./mat-table.mediator";
+import {Newable, TriggerPayload} from "./models";
 
 export abstract class MediatedTableComponent<F, O> implements AfterViewInit, OnDestroy {
 
-  @ViewChild(MatTable) protected table: MatTable<O>;
-  @ViewChild(MatPaginator) protected paginator: MatPaginator;
-  @ViewChild(MatSort) protected sort: MatSort;
+  /*@ViewChild(MatTable)     protected */ abstract table: MatTable<O>;
+  /*@ViewChild(MatPaginator) protected */ abstract paginator: MatPaginator;
+  /*@ViewChild(MatSort)      protected */ abstract sort: MatSort;
 
   protected mediator: MatTableMediator<F, O>;
   protected attempts = 0;
-  protected readonly onDestroy$ = new Subject<any>();
-  protected isLoading$: Observable<boolean>;
+  isLoading$: Observable<boolean>;
 
-  abstract displayedColumns: string[];
+  abstract columns: string[];
   abstract trigger$: TriggerPayload<F>;
 
   /**
    * The `initialIsLoading` param sets the initial value for isLoading$.
    * If your fetching (read: loading) starts in ngAfterViewInit and the initial value for isLoading$ is `false`,
    * you will get an `ExpressionChangedAfterItHasBeenCheckedError`! Use this parameter to prevent this error.
+   * @param mediatorClass Class of the Mediator to use
    * @param initialIsLoading the initial value for isLoading$
    */
-  protected constructor(initialIsLoading: boolean = false) {
+  protected constructor(private mediatorClass: Newable<MatTableMediator<F, O>>,
+                        initialIsLoading: boolean = false) {
     this.isLoading$ = of(initialIsLoading);
   }
 
@@ -33,12 +33,12 @@ export abstract class MediatedTableComponent<F, O> implements AfterViewInit, OnD
                  sortBy?: string,
                  sortDirection?: SortDirection,
                  pageIndex?: number,
-                 pageSize?: number): Observable<MediatorData<O>>;
+                 pageSize?: number): Observable<any>;
 
   abstract ngAfterViewInit();
 
   protected initMediator(): void {
-    this.mediator = new BasicTableMediator(
+    this.mediator = new this.mediatorClass(
       (payload, sortBy, sortDirection, pageIndex, pageSize) =>
         this.fetch(payload, sortBy, sortDirection, pageIndex, pageSize),
       this.trigger$,
@@ -50,8 +50,6 @@ export abstract class MediatedTableComponent<F, O> implements AfterViewInit, OnD
 
   ngOnDestroy(): void {
     this.mediator.ngOnDestroy();
-    this.onDestroy$.next();
-    this.onDestroy$.complete();
   }
 
 }

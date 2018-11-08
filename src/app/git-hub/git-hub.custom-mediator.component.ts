@@ -1,16 +1,16 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTable, SortDirection} from '@angular/material';
 import {HttpClient} from '@angular/common/http';
-import {MatTableMediator, MediatorData, TriggerPayload, BasicTableMediator} from 'ngx-material-table-mediator';
+import {MatTableMediator, MediatorData, TriggerPayload} from 'ngx-material-table-mediator';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {GithubApi, GithubIssue} from "../models";
 
-@Component({
-  selector: 'app-root',
-  templateUrl: '../app.component.html',
-  styleUrls: ['../app.component.css']
-})
+/*@Component({
+  selector: 'app-git-hub',
+  templateUrl: './git-hub.component.html',
+  styleUrls: ['./git-hub.component.css']
+})*/
 export class GitHubComponent implements AfterViewInit {
   trigger$ = new BehaviorSubject<void>(undefined);
 

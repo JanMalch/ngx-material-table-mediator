@@ -6,17 +6,17 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {GithubApi, GithubIssue} from "../models";
 
-@Component({
-  selector: 'app-root',
-  templateUrl: '../app.component.html',
-  styleUrls: ['../app.component.css']
-})
+/*@Component({
+  selector: 'app-git-hub',
+  templateUrl: './git-hub.component.html',
+  styleUrls: ['./git-hub.component.css']
+})*/
 export class AppComponent implements AfterViewInit {
   trigger$ = new BehaviorSubject<void>(undefined);
 
   mediator: MatTableMediator<void, GithubIssue>;
 
-  displayedColumns: string[] = ['created', 'state', 'number', 'title'];
+  columns = ['created', 'state', 'number', 'title'];
 
   isLoading$ = of(true);
   isRateLimitReached$ = new BehaviorSubject<boolean>(false);

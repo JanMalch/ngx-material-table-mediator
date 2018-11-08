@@ -1,10 +1,10 @@
 import {MatPaginator, MatSort, MatTable, SortDirection} from '@angular/material';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {MediatorData, TriggerPayload} from './models';
-import {MatTableMediator} from './mat-table.mediator';
+import {MediatorData, TriggerPayload} from '../models';
+import {MatTableMediator} from '../mat-table.mediator';
 
-export class LocalTableMediator<F, O> extends MatTableMediator<F, O> {
+export class ArrayTableMediator<F, O> extends MatTableMediator<F, O> {
 
   constructor(protected fetchFn: (payload?: F, sortBy?: string,
                                   sortDirection?: SortDirection,

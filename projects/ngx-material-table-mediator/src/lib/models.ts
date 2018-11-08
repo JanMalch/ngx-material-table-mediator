@@ -28,4 +28,6 @@ export interface MediatorData<O> {
   data: Array<O>;
 }
 
-
+export interface Newable<T> {
+  new(...args: any[]): T;
+}

@@ -1,7 +1,11 @@
-<p>This is an <a href="https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/git-hub/git-hub.component.ts">implementation</a>
-  of
+<p>This is an
+  <a href="https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/git-hub/git-hub.component.ts">
+    implementation</a> of
   <a href="https://material.angular.io/components/table/examples"><b>"Table retrieving data through HTTP"</b></a>
-  with the <a href="https://npmjs.com/package/ngx-material-table-mediator"><b>ngx-material-table-mediator</b></a> library.</p>
+  with the <a href="https://npmjs.com/package/ngx-material-table-mediator"><b>ngx-material-table-mediator</b></a>
+  library.<br/>
+  GitHub provides the option to sort by "Created", so the client side doesn't have to do this (not every column works).
+  Every call returns exactly 30 items and the total length of available items.</p>
 
 <div class="example-container mat-elevation-z8">
   <div class="example-loading-shade"
@@ -25,13 +29,13 @@
 
       <!-- Title Column -->
       <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Title</th>
+        <th mat-header-cell *matHeaderCellDef disableClear>Title</th>
         <td mat-cell *matCellDef="let row">{{row.title}}</td>
       </ng-container>
 
       <!-- State Column -->
       <ng-container matColumnDef="state">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
+        <th mat-header-cell *matHeaderCellDef>State</th>
         <td mat-cell *matCellDef="let row">{{row.state}}</td>
       </ng-container>
 
@@ -43,16 +47,12 @@
         <td mat-cell *matCellDef="let row">{{row.created_at | date}}</td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
     </table>
   </div>
-
-  <mat-paginator [pageSizeOptions]="[10, 25, 30, 50, 100]" [pageSize]="30" showFirstLastButtons></mat-paginator>
+<!-- GitHub doesn't provide pageSize options -->
+  <mat-paginator [pageSizeOptions]="[30]" [pageSize]="30"></mat-paginator>
 </div>
 
 <button mat-raised-button color="primary" (click)="trigger$.next(undefined)">SEARCH NOW</button>
-<blockquote>Due to the GitHub API you can only sort by <i>Created</i>.<br/>
-  But you can also click other columns, and you will see it will fetch the data again.<br/><br/>
-  Same goes for selecting the page size. You could implement this with JavaScript as above.
-</blockquote>

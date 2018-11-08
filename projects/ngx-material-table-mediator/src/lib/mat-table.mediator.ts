@@ -65,7 +65,7 @@ export abstract class MatTableMediator<F, O> implements OnInit, OnDestroy {
                  sortBy?: string,
                  sortDirection?: SortDirection,
                  pageIndex?: number,
-                 pageSize?: number): Observable<MediatorData<O>>; // TODO: in separates interface
+                 pageSize?: number): Observable<MediatorData<O>>;
 
   /**
    * An optional function passed into the MatTable that defines how to track the items

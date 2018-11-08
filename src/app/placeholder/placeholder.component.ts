@@ -1,47 +1,33 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {Component, ViewChild} from '@angular/core';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {MatPaginator, MatSort, MatTable, SortDirection} from '@angular/material';
 import {HttpClient} from '@angular/common/http';
-import {LocalTableMediator} from '../../../projects/ngx-material-table-mediator/src/lib/local.mediator';
+import {ArrayTableMediator, MediatedTableComponent, MediatorData} from 'ngx-material-table-mediator';
 
 @Component({
   selector: 'app-placeholder',
   templateUrl: './placeholder.component.html',
   styleUrls: ['./placeholder.component.css']
 })
-export class PlaceholderComponent implements AfterViewInit {
-
-  trigger$ = new BehaviorSubject<string>(undefined);
-
-  mediator: LocalTableMediator<void, Comment>;
-
-  displayedColumns: string[] = ['postId', 'id', 'name', 'email'];
-  isLoading$ = of(true);
-  isRateLimitReached$ = new BehaviorSubject<boolean>(false);
-
+export class PlaceholderComponent extends MediatedTableComponent<string, Comment> {
   @ViewChild(MatTable) table: MatTable<Comment>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  columns = ['postId', 'id', 'name', 'email'];
+
+  trigger$ = new BehaviorSubject<string>("");
 
   constructor(private http: HttpClient) {
+    super(ArrayTableMediator, true);
   }
 
-  ngAfterViewInit() {
-    this.mediator = new LocalTableMediator<any, Comment>(
-      (payload, sortBy, sortDirection, pageIndex, pageSize) =>
-        this.fetch(payload, sortBy, sortDirection, pageIndex, pageSize),
-      this.trigger$, this.table,
-      this.paginator, this.sort
-    );
-
-    this.isLoading$ = this.mediator.isLoading$;
-    this.mediator.error$.subscribe(() => this.isRateLimitReached$.next(true));
-    this.mediator.onFetchBegin$.subscribe(() => this.isRateLimitReached$.next(false));
+  ngAfterViewInit() { // tslint:disable-line:use-life-cycle-interface
+    this.initMediator();
   }
 
-  private fetch(payload: string | undefined,
-                sortBy: string, sortDirection: SortDirection,
-                pageIndex: number, pageSize: number): Observable<Array<Comment>> {
+  fetch(payload: string,
+        sortBy: string, sortDirection: SortDirection,
+        pageIndex: number, pageSize: number): Observable<Array<Comment>> {
     return !!payload && payload.length > 0 ?
       this.http.get<Array<Comment>>(`https://jsonplaceholder.typicode.com/comments?postId=${payload}`) :
       this.http.get<Array<Comment>>(`https://jsonplaceholder.typicode.com/comments`);

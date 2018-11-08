@@ -1,5 +1,5 @@
-import {MatTableMediator} from './mat-table.mediator';
-import {FetchFunction, TriggerPayload, MediatorData} from './models';
+import {MatTableMediator} from '../mat-table.mediator';
+import {FetchFunction, TriggerPayload, MediatorData} from '../models';
 import {Observable} from 'rxjs';
 import {MatPaginator, MatSort, MatTable, SortDirection} from '@angular/material';
 
