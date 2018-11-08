@@ -11,3 +11,14 @@ export interface GithubIssue {
   state: string;
   title: string;
 }
+
+// https://jsonplaceholder.typicode.com/comments
+
+export interface Comment {
+  postId: number;
+  id: number;
+  name: string;
+  email: string;
+  body: string;
+}
+

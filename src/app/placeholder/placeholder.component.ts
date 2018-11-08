@@ -1,19 +1,17 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {MatPaginator, MatSort, MatTable, SortDirection} from '@angular/material';
 import {HttpClient} from '@angular/common/http';
-import {MatTableMediator, MediatorData, BasicTableMediator} from 'ngx-material-table-mediator';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {GithubApi, GithubIssue} from "./models";
-import {LocalTableMediator} from 'ngx-material-table-mediator';
+import {LocalTableMediator} from '../../../projects/ngx-material-table-mediator/src/lib/local.mediator';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-placeholder',
+  templateUrl: './placeholder.component.html',
+  styleUrls: ['./placeholder.component.css']
 })
-export class AppComponent /*implements AfterViewInit*/ {
- /* trigger$ = new BehaviorSubject<string>(undefined);
+export class PlaceholderComponent implements AfterViewInit {
+
+  trigger$ = new BehaviorSubject<string>(undefined);
 
   mediator: LocalTableMediator<void, Comment>;
 
@@ -47,5 +45,5 @@ export class AppComponent /*implements AfterViewInit*/ {
     return !!payload && payload.length > 0 ?
       this.http.get<Array<Comment>>(`https://jsonplaceholder.typicode.com/comments?postId=${payload}`) :
       this.http.get<Array<Comment>>(`https://jsonplaceholder.typicode.com/comments`);
-  }*/
+  }
 }

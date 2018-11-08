@@ -33,7 +33,7 @@ fetch(payload: F,
 
 ```typescript
 // an Observable to trigger fetching and sending a payload in the body.
-protected fetchPayload$: FetchPayload<F>; // you can also put this in your constructor!
+protected trigger$: TriggerPayload<F>; // you can also put this in your constructor!
 ```
 
 ```typescript
@@ -56,7 +56,7 @@ You can find an example [here](https://github.com/JanMalch/ngx-material-table-me
 
 ## `BasicTableMediator`
 
-You can also use the `BasicTableMediator`, which takes the fetch function and and fetchPayload as constructor parameters.
+You can also use the `BasicTableMediator`, which takes the fetch function and and trigger as constructor parameters.
 This is useful for simple mediators and makes creating subclasses unnecessary.
 
 ```typescript
@@ -101,7 +101,7 @@ Besides the necessary implementations you can override the following methods, to
 - `handleError(error: Error): Observable<MediatorData<O>>` → This function handles any errors that occur while fetching the data.
                    You can either safely handle the error and return replacement data or rethrow the error.
 - `initDataFetch(): void` → This is the mediator's core function and setups the logic.
-- `initPageReset(): void` → This function creates an internal observable to reset the paginator, if sorting or fetch payload changes.
+- `initPageReset(): void` → This function creates an internal observable to reset the paginator, if sorting or trigger payload changes.
 - `ngOnInit(): void` → This function initialises the page reset and the fetch function.
 - `trackByFn(index: number, item: O): any` → An optional function passed into the MatTable that defines how to track the items.
 

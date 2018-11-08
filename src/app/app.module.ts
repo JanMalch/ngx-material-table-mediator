@@ -5,10 +5,15 @@ import { AppComponent } from './app.component';
 import {MatButtonModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule} from '@angular/forms';
+import { PlaceholderComponent } from './placeholder/placeholder.component';
+import { GitHubComponent } from './git-hub/git-hub.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PlaceholderComponent,
+    GitHubComponent
   ],
   imports: [
     BrowserModule,
@@ -18,7 +23,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatPaginatorModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    MatButtonModule
+    MatButtonModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

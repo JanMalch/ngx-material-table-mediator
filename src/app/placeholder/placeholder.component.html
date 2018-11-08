@@ -1,0 +1,59 @@
+<p>This is an
+  <a href="https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/placeholder/placeholder.component.ts">
+    implementation</a>
+  of a table displaying <a href="https://jsonplaceholder.typicode.com/">JSONPlaceholder</a> data
+  with the <a href="https://npmjs.com/package/ngx-material-table-mediator"><b>ngx-material-table-mediator</b></a> library.</p>
+<div class="example-container mat-elevation-z8">
+  <div class="example-loading-shade"
+       *ngIf="isLoading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+
+
+  <div class="filter">
+    <input #query placeholder="postId">
+    <button mat-raised-button color="primary" (click)="trigger$.next(query.value)">SEARCH NOW</button>
+  </div>
+  <div class="example-table-container">
+
+    <!-- notice you dont have to add the dataSource -->
+    <table mat-table class="example-table"
+           matSort matSortActive="postId" matSortDisableClear matSortDirection="asc">
+      <!-- Number Column -->
+      <ng-container matColumnDef="postId">
+        <th mat-header-cell *matHeaderCellDef>postId</th>
+        <td mat-cell *matCellDef="let row">{{row.postId}}</td>
+      </ng-container>
+
+      <!-- Title Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>id</th>
+        <td mat-cell *matCellDef="let row">{{row.id}}</td>
+      </ng-container>
+
+      <!-- State Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>name</th>
+        <td mat-cell *matCellDef="let row">{{row.name}}</td>
+      </ng-container>
+
+      <!-- Created Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+          email
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.email}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 30, 50, 100]" [pageSize]="30" showFirstLastButtons></mat-paginator>
+
+</div>
+
+<blockquote>The sorting and pagination is done with JavaScript here, while the filtering is done via the URL.
+  <div><code>https://jsonplaceholder.typicode.com/comments?postId={{ query.value }}</code></div>
+</blockquote>
