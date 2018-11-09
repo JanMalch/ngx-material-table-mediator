@@ -10,7 +10,7 @@ The data for the table comes from an observable.
 * `ArrayTableMediator` → This mediator takes an array as data and takes care of sorting and pagination on client side.
 * `MediatedTableComponent` → An abstract class for your component that takes away all the boilerplate code. **[Recommended]**
 
-## Installation
+### Installation
 
 ```
 npm i ngx-material-table-mediator
@@ -64,7 +64,7 @@ export class PlaceholderComponent extends MediatedTableComponent<string, Comment
 
 The HTML is entirely up to you. See an example [here](https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/placeholder/placeholder.component.html).
 
-## Mapping results
+### Mapping results
 
 If you use the `BasicTableMediator` you might have to map your fetched data to the `MediatorData` interface.
 
@@ -84,7 +84,7 @@ See [here](https://github.com/JanMalch/ngx-material-table-mediator/blob/master/s
 
 You can access the mediator object in your component via `this.mediator`.
 
-## Hooks
+### Hooks
 
 The class provides the following hooks as observables, to react to certain events.
 
@@ -96,7 +96,7 @@ The class provides the following hooks as observables, to react to certain event
 - `onNoResultsFound$: Observable<void>` → only emits if no results were found (x === 0)
 - `onFetchBegin$: Observable<void>` → only emits if loading has started. You might use this to hide previous errors
 
-## Your custom mediator
+### Your custom mediator
 
 Besides the necessary implementations you can override the following methods, to implement custom behaviour.
 
