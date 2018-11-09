@@ -8,7 +8,7 @@ The data for the table comes from an observable.
 * `MatTableMediator` → The abstract base class that contains all the logic.
 * `BasicTableMediator` → An implementation of the `MatTableMediator` to have in your component.
 * `ArrayTableMediator` → This mediator takes an array as data and takes care of sorting and pagination on client side.
-* `MediatedTableComponent` → An abstract class for your component that takes away all the boilerplate code.
+* `MediatedTableComponent` → An abstract class for your component that takes away all the boilerplate code. **[Recommended]**
 
 ## Installation
 
@@ -62,7 +62,23 @@ export class PlaceholderComponent extends MediatedTableComponent<string, Comment
 }
 ```
 
-The HTML is entirely up to you. See an example here.
+The HTML is entirely up to you. See an example [here](https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/placeholder/placeholder.component.html).
+
+## Mapping results
+
+If you use the `BasicTableMediator` you might have to map your fetched data to the `MediatorData` interface.
+
+```typescript
+return this.http.get<GithubApi>(requestUrl).pipe(
+  map(response => ({
+      data: response.items,
+      total: response.total_count
+    })
+  )
+);
+```
+
+See [here](https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/git-hub/git-hub.component.ts#L38).
 
 ## Mediator class
 
