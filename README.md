@@ -2,9 +2,13 @@
 
 # ngx-material-table-mediator
 
-This library provides an abstract class `MatTableMediator`,
-which helps you manage a MatTable, MatSort and MatPaginator in your component.
-It also contains the `BasicTableMediator`, a simple implementation of `MatTableMediator`.
+This library provides the following classes to help you manage a MatTable, MatSort and MatPaginator in your component.
+The data for the table comes from an observable.
+
+* `MatTableMediator` → The abstract base class that contains all the logic.
+* `BasicTableMediator` → An implementation of the `MatTableMediator` to have in your component.
+* `ArrayTableMediator` → This mediator takes an array as data and takes care of sorting and pagination on client side.
+* `MediatedTableComponent` → An abstract class for your component that takes away all the boilerplate code.
 
 ## Installation
 
@@ -14,71 +18,55 @@ npm i ngx-material-table-mediator
 
 ## Usage
 
-```typescript
-import {MatTableMediator} from 'ngx-material-table-mediator';
-```
+You can create your own subclass of `MatTableMediator`, or use the provided implementations
+(see examples [here](https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/git-hub/git-hub.basic-mediator.component.ts) 
+and [here](https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/placeholder/placeholder.alternative.component.ts)).
 
-Since it's an abstract class you have to create your own subclasses. Only 3 things are required:
+The recommend approach is to use the `MediatedTableComponent` class. Here's all you need in your component 
+([example 1](https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/placeholder/placeholder.component.ts),
+[example 2](https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/git-hub/git-hub.component.ts)).
 
 ```typescript
-fetch(payload: F,
-      sortBy: string, 
-      sortDirection: SortDirection,
-      pageIndex: number,
-       pageSize: number): Observable<MediatorData<O>> {
-  // call your API and map the result to MediatorData<O>
-  // where <O> is the generic type for MatTable (it's data, e.g. GithubIssue, not Array<GithubIssue> !)
+@Component({
+  selector: 'app-placeholder',
+  templateUrl: './placeholder.component.html',
+  styleUrls: ['./placeholder.component.css']
+}) //                                                  <trigger payload, table data>
+export class PlaceholderComponent extends MediatedTableComponent<string, Comment> {
+  columns = ['postId', 'id', 'name', 'email']; // set the columns for your table
+  trigger$ = new BehaviorSubject<string>(""); // add a trigger to start fetching the data
+  // the trigger$ helps you control the fetching via button clicks etc.
+  // if you want to fetch right away and don't use this just put   = of(undefined)
+
+  constructor(private http: HttpClient) {
+    // specify which implementation you want to use
+    // use a boolen flag to indicate initial loading status, to prevent ExpressionChangedAfterItHasBeenCheckedError errors
+    super(ArrayTableMediator, true);
+  }
+
+  ngAfterViewInit() { // tslint:disable-line:use-life-cycle-interface
+    this.initMediator(); // call this once in ngAfterViewInit, when the @ViewChild's are available
+    // note that you don't have to write the @ViewChild's yourself!
+  }
+
+  // implement your fetch function with the provided data
+  // this can be an HTTP call or getting store data
+  // if you use the BasicTableMediator in the super call you should return an Observable<MediatorData<Comment>>
+  fetch(payload: string,
+        sortBy: string, sortDirection: SortDirection,
+        pageIndex: number, pageSize: number): Observable<Array<Comment>> {
+    return !!payload && payload.length > 0 ?
+      this.http.get<Array<Comment>>(`https://jsonplaceholder.typicode.com/comments?postId=${payload}`) :
+      this.http.get<Array<Comment>>(`https://jsonplaceholder.typicode.com/comments`);
+  }
 }
 ```
 
-```typescript
-// an Observable to trigger fetching and sending a payload in the body.
-protected trigger$: TriggerPayload<F>; // you can also put this in your constructor!
-```
+The HTML is entirely up to you. See an example here.
 
-```typescript
-constructor( 
-  // ...
-  table: MatTable<O>,
-  paginator: MatPaginator,
-  sort: MatSort
-) {
-  super(table, paginator, sort);
-  // ...
-  // due to inheritance this cannot be called by the super class every time
-  super.ngOnInit(); // you don't have to call this in the constructor. It depends on your use case.
-}
-```
+## Mediator class
 
-The mediator will take care of feeding the objects the correct data.
-
-You can find an example [here](https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/app.component.ts).
-
-## `BasicTableMediator`
-
-You can also use the `BasicTableMediator`, which takes the fetch function and and trigger as constructor parameters.
-This is useful for simple mediators and makes creating subclasses unnecessary.
-
-```typescript
-ngAfterViewInit() {
-  this.mediator = new BasicTableMediator<any, GithubIssue>(
-    (payload, sortBy, sortDirection, pageIndex, pageSize) =>
-      this.fetch(payload, sortBy, sortDirection, pageIndex, pageSize),
-    this.trigger$, this.table,
-    this.paginator, this.sort
-  );
-
-  this.isLoading$ = this.mediator.isLoading$;
-  this.mediator.error$.subscribe(() => this.isRateLimitReached$.next(true));
-  this.mediator.onFetchBegin$.subscribe(() => this.isRateLimitReached$.next(false));
-}
-
-private fetch(payload: undefined,
-              sortBy: string, sortDirection: SortDirection,
-              pageIndex: number, pageSize: number): Observable<MediatorData<GithubIssue>> {
-  // your API call
-}
-```
+You can access the mediator object in your component via `this.mediator`.
 
 ## Hooks
 
@@ -105,6 +93,9 @@ Besides the necessary implementations you can override the following methods, to
 - `ngOnInit(): void` → This function initialises the page reset and the fetch function.
 - `trackByFn(index: number, item: O): any` → An optional function passed into the MatTable that defines how to track the items.
 
-Since `MatPaginator` and `MatSort` are optional the mediator has a few getter properties, that ensure safe access:
+Since `MatPaginator` and `MatSort` are optional, the mediator has a few getter properties that ensure safe access:
 
 `sortChange$`, `sortActive`, `sortDirection`, `page$`, `pageIndex`, `pageSize`
+
+>You can find an example of a custom Mediator class [here](https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/git-hub/git-hub.custom-mediator.component.ts).
+
