@@ -1,8 +1,8 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {GithubApi, GithubIssue} from '../models';
 import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {MatPaginator, MatSort, MatTable, SortDirection} from '@angular/material';
+import {SortDirection} from '@angular/material';
 import {map} from 'rxjs/operators';
 import {BasicTableMediator, MediatedTableComponent, MediatorData} from 'ngx-material-table-mediator';
 
@@ -12,9 +12,6 @@ import {BasicTableMediator, MediatedTableComponent, MediatorData} from 'ngx-mate
   styleUrls: ['./git-hub.component.css']
 })
 export class GitHubComponent extends MediatedTableComponent<any, GithubIssue> {
-  @ViewChild(MatTable) table: MatTable<GithubIssue>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
   columns = ['created', 'state', 'number', 'title'];
 
   // trigger$ = new BehaviorSubject<any>(undefined); // loading starts instantly, use super(BasicTableMediator, true);

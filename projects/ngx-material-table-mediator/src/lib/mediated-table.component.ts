@@ -6,9 +6,9 @@ import {Newable, TriggerPayload} from "./models";
 
 export abstract class MediatedTableComponent<F, O> implements AfterViewInit, OnDestroy {
 
-  /*@ViewChild(MatTable)     protected */ abstract table: MatTable<O>;
-  /*@ViewChild(MatPaginator) protected */ abstract paginator: MatPaginator;
-  /*@ViewChild(MatSort)      protected */ abstract sort: MatSort;
+  @ViewChild(MatTable) table: MatTable<O>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   protected mediator: MatTableMediator<F, O>;
   protected attempts = 0;

@@ -1,8 +1,8 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {MatPaginator, MatSort, MatTable, SortDirection} from '@angular/material';
+import {SortDirection} from '@angular/material';
 import {HttpClient} from '@angular/common/http';
-import {ArrayTableMediator, MediatedTableComponent, MediatorData} from 'ngx-material-table-mediator';
+import {ArrayTableMediator, MediatedTableComponent} from 'ngx-material-table-mediator';
 
 @Component({
   selector: 'app-placeholder',
@@ -10,9 +10,6 @@ import {ArrayTableMediator, MediatedTableComponent, MediatorData} from 'ngx-mate
   styleUrls: ['./placeholder.component.css']
 })
 export class PlaceholderComponent extends MediatedTableComponent<string, Comment> {
-  @ViewChild(MatTable) table: MatTable<Comment>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
   columns = ['postId', 'id', 'name', 'email'];
 
   trigger$ = new BehaviorSubject<string>("");
