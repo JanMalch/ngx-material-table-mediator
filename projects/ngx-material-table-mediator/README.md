@@ -64,6 +64,9 @@ export class PlaceholderComponent extends MediatedTableComponent<string, Comment
 
 The HTML is entirely up to you. See an example [here](https://github.com/JanMalch/ngx-material-table-mediator/blob/master/src/app/placeholder/placeholder.component.html).
 
+>Note that the abstract component provides an `isLoading$` observable, which automatically connects to the mediator.
+>This helps you prevent common errors.
+
 ### Mapping results
 
 If you use the `BasicTableMediator` you might have to map your fetched data to the `MediatorData` interface.
