@@ -11,6 +11,7 @@ import {ArrayTableMediator, MediatedTableComponent} from 'ngx-material-table-med
 })
 export class PlaceholderComponent extends MediatedTableComponent<string, Comment> {
   columns = ['postId', 'id', 'name', 'email'];
+
   trigger$ = new BehaviorSubject<string>("");
 
   constructor(private http: HttpClient) {

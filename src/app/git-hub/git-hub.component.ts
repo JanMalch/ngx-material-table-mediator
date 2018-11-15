@@ -12,8 +12,14 @@ import {BasicTableMediator, MediatedTableComponent, MediatorData} from 'ngx-mate
   styleUrls: ['./git-hub.component.css']
 })
 export class GitHubComponent extends MediatedTableComponent<any, GithubIssue> {
-  columns = ['created', 'state', 'number', 'title'];
+  columnLabels = {
+    created_at: "Created at",
+    state: "State",
+    number: "Number",
+    title: "Title"
+  };
 
+  columns = Object.keys(this.columnLabels);
   // trigger$ = new BehaviorSubject<any>(undefined); // loading starts instantly, use super(BasicTableMediator, true);
   trigger$ = new ReplaySubject<any>(1); // loading starts after button click, use super(BasicTableMediator, false);
 
