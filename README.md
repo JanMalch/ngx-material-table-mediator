@@ -1,3 +1,5 @@
+# !! Development has moved to [ngx-mat-table-mediator](https://github.com/JanMalch/ngx-mat-table-mediator)
+
 [![npm version](https://badge.fury.io/js/ngx-material-table-mediator.svg)](https://badge.fury.io/js/ngx-material-table-mediator)
 
 # ngx-material-table-mediator
